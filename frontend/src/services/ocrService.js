@@ -10,7 +10,7 @@
 // New Jimp setup using @jimp/custom
 // import JimpImport from 'jimp'; // Old incorrect import
 // import { Jimp } from 'jimp'; // Commenting out this named import
-import * as Jimp from 'jimp'; // Using namespace import
+import Jimp from 'jimp'; // Reverting to default import
 // import types from '@jimp/types'; // Old incorrect import
 // import * as pluginColor from '@jimp/plugin-color'; // Use namespace import
 // import * as pluginThreshold from '@jimp/plugin-threshold'; // Use namespace import

@@ -32,11 +32,13 @@
 - [x] **Task 2.3: Frame Extraction Logic (FFmpeg)**
     - [x] **Sub-Task 2.3.1: Integrate FFmpeg.wasm**
         - [x] Add FFmpeg.wasm to the project
-        - [x] Write service to load FFmpeg.wasm
+        - [x] Write service to load FFmpeg.wasm (`✅ Complete` - Direct load in App.jsx working, service refactor pending)
+        - [x] **Note (2024-07-30):** FFmpeg loading is stable after Vite config `optimizeDeps.exclude` and correct `baseURL`.
     - [x] **Sub-Task 2.3.2: Frame Sampling Service**
-        - [x] Function to extract frames at X-second intervals (configurable, default 1s)
-        - [x] Handle video loading into FFmpeg.wasm
-        - [x] Output frames as image data (e.g., base64 or blob)
+        - [x] Function to extract frames at X-second intervals (configurable, default 1s) (`✅ Complete` - Implemented directly in App.jsx, extracts 1fps)
+        - [x] Handle video loading into FFmpeg.wasm (`✅ Complete`)
+        - [x] Output frames as image data (e.g., base64 or blob) (`✅ Complete` - Outputting as Blobs)
+        - [x] **Note (2024-07-30):** Frame extraction (1fps) and display of the first frame is functional directly within `App.jsx`.
     - [ ] **Sub-Task 2.3.3: (Fallback) System FFmpeg detection (Optional for MVP, consider for robustness)**
         - [ ] If Node.js server has more capabilities, explore detecting local FFmpeg install. For pure browser, this is out of scope.
 
@@ -54,17 +56,19 @@
             -   Display basic OCR status/results in the UI. (`✅ Complete`)
             -   Ensure worker termination on component unmount. (`✅ Complete`)
 -   **Task 3.2: Enhance OCR Results Handling & Implement Export**
-    -   **Status:** `✅ Complete`
+    -   **Status:** `✅ Complete` (Core export functionality)
     -   **Complexity:** 2
     -   **Sub-Tasks:**
         -   Display OCR results per frame in the UI. (`✅ Complete` - achieved during Task 3.1 and refined)
         -   Implement "Export Text" button to copy all consolidated OCR text to clipboard. (`✅ Complete`)
         -   Ensure appropriate UI feedback for export (e.g., "copied" alert). (`✅ Complete`)
         -   Implement image preprocessing to improve OCR accuracy.
-            -   **Status:** `✅ Complete`
-            -   **Note (2024-07-29):** Successfully integrated Jimp for image preprocessing (grayscale, contrast, thresholding). The initial complex setup using `@jimp/custom` and individual plugins caused significant build/runtime issues with Vite. The fix was to revert to the standard Jimp import (`import { Jimp } from 'jimp';`), which resolved the module errors and allowed preprocessing to function.
+            -   **Status:** `In Progress`
+            -   **Note (2024-07-29):** Jimp dependency version conflicts resolved by uninstalling mixed versions and installing `jimp@^0.22.12`.
+            -   **Note (2024-07-30):** Currently troubleshooting Jimp import with Vite. `import Jimp from 'jimp';` caused Vite error "does not provide an export named 'default'". Switched to `import * as Jimp from 'jimp';`. Next step if current approach fails is to try excluding `jimp` from `vite.optimizeDeps`. The runtime error `image.grayscale is not a function` persists, indicating the Jimp instance from `Jimp.read()` is not complete.
 -   **Task 3.3: Link Frame Extraction to OCR**
-    - [ ] Orchestrate the process: extract frame -> pass to OCR -> store result with timestamp
+    -   **Status:** `In Progress`
+    - [x] Orchestrate the process: extract frame -> pass to OCR -> store result with timestamp (`✅ In Progress` - Frames are passed to OCR, but Jimp preprocessing within OCR step is failing)
 
 ### Milestone 4: Text Overlay + Result Viewer + Export
 - [ ] **Task 4.1: OCR Results Display**
